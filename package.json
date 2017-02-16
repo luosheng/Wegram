@@ -1,0 +1,5 @@
+{
+  "dependencies": {
+    "wechaty": "^0.7.17"
+  }
+}
