@@ -1,0 +1,6 @@
+{
+    "telegram": {
+        "token": "<fill me in>",
+        "userId": 0
+    }
+}
