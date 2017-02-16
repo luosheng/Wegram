@@ -1,6 +1,9 @@
 const { Wechaty, Message } = require('wechaty');
+const TelegramBot = require('node-telegram-bot-api');
+const config = require('config');
 
 const wechaty = Wechaty.instance();
+const telegram = new TelegramBot(config.get('telegram.token'), { polling: true });
 
 var me = null;
 
@@ -11,9 +14,10 @@ wechaty.on('login', (user) => {
 wechaty.on('message', (message) => {
     const from = message.from();
     if (from.id !== me.id) {
-        const reply = new Message();
-        reply.to(from);
-        reply.content(`Message received: ${message}`);
-        wechaty.send(reply);
+        telegram.sendMessage(config.get('telegram.userId'), `${ message }`);
     }
+});
+
+telegram.on('message', (message) => {
+    console.log(message);
 });
