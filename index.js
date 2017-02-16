@@ -2,11 +2,18 @@ const { Wechaty, Message } = require('wechaty');
 
 const wechaty = Wechaty.instance();
 
+var me = null;
+
 wechaty.init();
+wechaty.on('login', (user) => {
+    me = user;
+});
 wechaty.on('message', (message) => {
-    console.log(message.from());
-    const reply = new Message();
-    reply.to(message.from());
-    reply.content(`Message received: ${message}`);
-    wechaty.send(reply);
+    const from = message.from();
+    if (from.id !== me.id) {
+        const reply = new Message();
+        reply.to(from);
+        reply.content(`Message received: ${message}`);
+        wechaty.send(reply);
+    }
 });
